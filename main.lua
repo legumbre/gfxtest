@@ -76,18 +76,20 @@ int SDL_GetNumVideoDrivers(void);
 ]]
 
 function sdl_get_info()
+   local sdl = ffi.load('SDL2')
+   
    local t = {}
-   t.CPUCount = ffi.C.SDL_GetCPUCount()
-   t.sysRAM = ffi.C.SDL_GetSystemRAM()
-   t.numDrivers = ffi.C.SDL_GetNumVideoDrivers()
-   t.displayNums = ffi.C.SDL_GetNumVideoDisplays()
+   t.CPUCount = sdl.SDL_GetCPUCount()
+   t.sysRAM = sdl.SDL_GetSystemRAM()
+   t.numDrivers = sdl.SDL_GetNumVideoDrivers()
+   t.displayNums = sdl.SDL_GetNumVideoDisplays()
 
    for i=0, t.displayNums-1 do
-      t["display_"..i] = ffi.string(ffi.C.SDL_GetDisplayName(i));
+      t["display_"..i] = ffi.string(sdl.SDL_GetDisplayName(i));
    end
 
    for i=0, t.numDrivers-1 do
-      t["driver_"..i] = ffi.string(ffi.C.SDL_GetVideoDriver(i));
+      t["driver_"..i] = ffi.string(sdl.SDL_GetVideoDriver(i));
    end
 
    return t
