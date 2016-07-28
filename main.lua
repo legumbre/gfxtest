@@ -36,7 +36,7 @@ function love.draw()
       g.printf(string.format("%s: %s",k,v), 20, y+20, 640)
       y = y + 20
    end
-   g.printf(string.format("saveDirs: %s",k,v), 20, y+20, 640) ; y = y + 20
+   g.printf(string.format("saveDirs: %s",love.filesystem.getSaveDirectory()), 20, y+20, 640) ; y = y + 20
    
    for k,v in pairs(sdl_get_info()) do
       g.printf(string.format("%s: %s",k,tostring(v)), 20, y+20, 640)
