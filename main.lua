@@ -76,7 +76,12 @@ int SDL_GetNumVideoDrivers(void);
 ]]
 
 function sdl_get_info()
-   local sdl = ffi.load('SDL2')
+   local sdl 
+   if love.system.getOS() == "Windows" then
+      sdl = ffi.load('SDL2')
+   else
+      sdl = ffi.C
+   end
    
    local t = {}
    t.CPUCount = sdl.SDL_GetCPUCount()
