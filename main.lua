@@ -3,6 +3,8 @@ local g= love.graphics
 
 local gfeatures
 local limits
+local name, version, vendor, device 
+
 local i1024, i2048
 local count = 0
 
@@ -18,6 +20,13 @@ function love.load()
    for k,v in pairs(limits) do
       print(string.format("%s: %s", k, v))
    end
+
+   name,version,vendor,device = g.getRendererInfo()
+   print("name: " .. name)
+   print("ver: " .. version)
+   print("vendor: " .. vendor)
+   print("device: " .. device)
+
    love.window.setTitle('gfxtest')
 end
 
@@ -28,24 +37,28 @@ function love.draw()
    
    local y = 0
    g.setColor(0,200,0)
+
+   g.printf(string.format("%s | %s | %s | %s",name,vendor,device,version), 20, y+20, w)
+   y = y + 20
+   
    for k,v in pairs(gfeatures) do
-      g.printf(string.format("%s: %s",k,v), 20, y+20, 640)
+      g.printf(string.format("%s: %s",k,v), 20, y+20, w)
       y = y + 20
    end
    for k,v in pairs(limits) do
-      g.printf(string.format("%s: %s",k,v), 20, y+20, 640)
+      g.printf(string.format("%s: %s",k,v), 20, y+20, w)
       y = y + 20
    end
-   g.printf(string.format("saveDirs: %s",love.filesystem.getSaveDirectory()), 20, y+20, 640) ; y = y + 20
+   g.printf(string.format("saveDirs: %s",love.filesystem.getSaveDirectory()), 20, y+20, w) ; y = y + 20
    
    for k,v in pairs(sdl_get_info()) do
-      g.printf(string.format("%s: %s",k,tostring(v)), 20, y+20, 640)
+      g.printf(string.format("%s: %s",k,tostring(v)), 20, y+20, w)
       y = y + 20
    end
 
    local msg = string.format("\nPress SPACE to cycle texture sizes: (current size=%s)", ({[0]="no texture",[1]="1024", [2]="2048"})[count])
    g.setColor(250,250,250)
-   g.printf(msg, 20, y+20, 640)
+   g.printf(msg, 20, y+20, w)
 end
 
 
